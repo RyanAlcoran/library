@@ -1,0 +1,12 @@
+.books-container {
+    display: flex;
+}
+.book-card {
+    padding: 10px;
+    border: 1px solid black;
+    background-color: antiquewhite;
+}
+
+.author {
+    font-size: large;
+}
