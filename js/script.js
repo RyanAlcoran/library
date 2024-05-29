@@ -26,6 +26,7 @@ newBookForm.addEventListener("submit", (event) => {
   read = document. getElementById("read").checked;
 
   addBookToLibrary(title, author, pages, read);
+  displayLibary();
   newBookForm.reset();
   addBookDialog.close();
 });
@@ -45,11 +46,36 @@ function Book(title, author, pages, read) {
   }
 
   function displayLibary() {
+    empty(booksContainer);
     myLibrary.forEach((book) => {
       let bookCard = document.createElement("div");
       bookCard.classList.add("book-card");
+
+      const title = document.createElement("h2");
+      const titleText = document.createTextNode(book.title);
+      title.classList.add("title");
+      title.appendChild(titleText);
+
+      const author = document.createElement("p");
+      const authorText = document.createTextNode("by " + book.author);
+      author.classList.add("author");
+      author.appendChild(authorText);
+
+      const pages = document.createElement("p");
+      const pagesText = document.createTextNode("Pages: " + book.pages)
+      pages.classList.add("pages");
+      pages.appendChild(pagesText);
+      
+      bookCard.appendChild(title);
+      bookCard.appendChild(author);
+      bookCard.appendChild(pages);
+      booksContainer.appendChild(bookCard);
       
     });
-    
-
   }
+
+  function empty(element) {
+    element.textContent = "";
+  }
+
+  displayLibary();
