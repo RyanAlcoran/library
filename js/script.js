@@ -7,14 +7,23 @@ console.log(myLibrary);
 
 const booksContainer = document.querySelector(".books-container");
 
+displayLibary();
+
 const showButton = document.getElementById("showBookDialog");
 const addBookDialog = document.getElementById("addBookDialog");
 const submitButton = addBookDialog.querySelector("#submitBookBtn");
+const cancelButton = addBookDialog.querySelector("#cancelBookBtn");
 const newBookForm = document.getElementById("newBookForm");
+
+
 
 // "NEW BOOK" button opens the dialog modally
 showButton.addEventListener("click", () => {
   addBookDialog.showModal();
+});
+
+cancelButton.addEventListener("click", () => {
+  addBookDialog.close();
 });
 
 /// Prevent the "Submit" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
@@ -32,6 +41,7 @@ newBookForm.addEventListener("submit", (event) => {
 });
 
 
+
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -47,7 +57,8 @@ function Book(title, author, pages, read) {
 
   function displayLibary() {
     empty(booksContainer);
-    myLibrary.forEach((book) => {
+
+    myLibrary.forEach((book, index) => {
       let bookCard = document.createElement("div");
       bookCard.classList.add("book-card");
 
@@ -65,11 +76,25 @@ function Book(title, author, pages, read) {
       const pagesText = document.createTextNode("Pages: " + book.pages)
       pages.classList.add("pages");
       pages.appendChild(pagesText);
+
+      const removeBtn = document.createElement("button")
+      removeBtn.dataset.bookIndex = index;
+      removeBtn.classList.add("removeBtn");
+      removeBtn.textContent = 'x Remove';
+
+      // Remove button deletes book from library
+      removeBtn.addEventListener("click", () => {
+        myLibrary.splice(index, 1);
+        displayLibary();
+      });
       
       bookCard.appendChild(title);
       bookCard.appendChild(author);
       bookCard.appendChild(pages);
+      bookCard.appendChild(removeBtn);
       booksContainer.appendChild(bookCard);
+
+      
       
     });
   }
@@ -77,5 +102,3 @@ function Book(title, author, pages, read) {
   function empty(element) {
     element.textContent = "";
   }
-
-  displayLibary();
