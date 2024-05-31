@@ -1,6 +1,6 @@
 const myLibrary = [];
 const book1 = new Book("Red Rising", "Pierce Brown", 382, true );
-const book2 = new Book("Golden Son", "Pierce Brown", 466, true );
+const book2 = new Book("Golden Son", "Pierce Brown", 466, false );
 myLibrary.push(book1);
 myLibrary.push(book2);
 console.log(myLibrary);
@@ -77,10 +77,30 @@ function Book(title, author, pages, read) {
       pages.classList.add("pages");
       pages.appendChild(pagesText);
 
-      const removeBtn = document.createElement("button")
+      const readBtn = document.createElement("button");
+      readBtn.classList.add("readBtn");
+      if (book.read == true) {
+        readBtn.textContent = "READ";
+      } 
+      else {
+        readBtn.textContent = "UNREAD";  
+      }
+
+      readBtn.addEventListener("click", () => {
+        if (book.read == true){
+          book.read = false;
+        }
+        else {
+          book.read = true;
+        }
+        displayLibary();
+      });
+
+      const removeBtn = document.createElement("button");
       removeBtn.dataset.bookIndex = index;
+      removeBtn.classList.add("button-74");
       removeBtn.classList.add("removeBtn");
-      removeBtn.textContent = 'x Remove';
+      removeBtn.textContent = 'REMOVE';
 
       // Remove button deletes book from library
       removeBtn.addEventListener("click", () => {
@@ -91,6 +111,7 @@ function Book(title, author, pages, read) {
       bookCard.appendChild(title);
       bookCard.appendChild(author);
       bookCard.appendChild(pages);
+      bookCard. appendChild(readBtn);
       bookCard.appendChild(removeBtn);
       booksContainer.appendChild(bookCard);
 
